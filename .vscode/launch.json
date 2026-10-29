@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚛 车载终端 (Vehicle) :8081",
+      "request": "launch",
+      "type": "dart",
+      "program": "apps/cat_vehicle/lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--web-port=8081"]
+    },
+    {
+      "name": "📋 平板终端 (Tablet) :8082",
+      "request": "launch",
+      "type": "dart",
+      "program": "apps/cat_tablet/lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--web-port=8082"]
+    },
+    {
+      "name": "📱 手机终端 (Phone) :8083",
+      "request": "launch",
+      "type": "dart",
+      "program": "apps/cat_phone/lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--web-port=8083"]
+    }
+  ]
+}

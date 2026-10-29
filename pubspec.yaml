@@ -1,0 +1,43 @@
+name: cat_app
+description: "CAT (Computerized Autonomous Transport) - monorepo workspace"
+publish_to: 'none'
+
+environment:
+  sdk: ^3.11.1
+
+dev_dependencies:
+  melos: ^8.9.0
+
+melos:
+  scripts:
+    analyze:
+      run: melos exec -- dart analyze .
+      description: Run static analysis on all packages
+    format:
+      run: melos exec -- dart format . --set-exit-if-changed
+      description: Format all Dart code
+    test:
+      run: melos exec -- flutter test
+      description: Run tests for all packages
+    build_runner:
+      run: melos exec --depends-on="build_runner" -- dart run build_runner build --delete-conflicting-outputs
+      description: Run code generation for all packages
+    clean:
+      run: melos exec -- flutter clean && melos exec -- dart run build_runner clean
+      description: Clean all packages
+    run_vehicle:
+      run: cd apps/cat_vehicle && flutter run -d chrome --web-port=8081
+      description: 启动车载终端 (Chrome 横屏 :8081)
+    run_tablet:
+      run: cd apps/cat_tablet && flutter run -d chrome --web-port=8082
+      description: 启动平板终端 (Chrome :8082)
+    run_phone:
+      run: cd apps/cat_phone && flutter run -d chrome --web-port=8083
+      description: 启动手机终端 (Chrome 竖屏 :8083)
+    run_all:
+      run: |
+        cd apps/cat_vehicle && flutter run -d chrome --web-port=8081 &
+        cd apps/cat_tablet && flutter run -d chrome --web-port=8082 &
+        cd apps/cat_phone && flutter run -d chrome --web-port=8083 &
+        wait
+      description: 同时启动三端 (车载:8081 平板:8082 手机:8083)

@@ -1,0 +1,22 @@
+name: cat_features
+description: Business feature modules for CAT app - dashboard, fleet, mission, alert, etc.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+  flutter: '>=3.41.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cat_domain:
+    path: ../cat_domain
+  cat_design_system:
+    path: ../cat_design_system
+  cat_core:
+    path: ../cat_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

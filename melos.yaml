@@ -1,0 +1,4 @@
+name: cat_app
+packages:
+  - apps/*
+  - packages/*
