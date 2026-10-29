@@ -76,6 +76,53 @@ CAT_Flutter/
 - Flutter SDK 3.41+（`flutter doctor` 确认环境就绪）
 - Melos 已激活：`dart pub global activate melos`
 
+### IDE 配置
+
+#### IntelliJ IDEA
+
+安装以下插件：
+
+| 插件 | 说明 |
+|------|------|
+| **Dart** | Dart 语言支持（语法高亮、代码补全、静态分析） |
+| **Flutter** | Flutter 框架支持（Widget 预览、热重载、设备管理） |
+
+> Flutter 插件会自动依赖 Dart 插件，直接安装 Flutter 插件即可。
+
+安装步骤：
+
+1. `Settings / Preferences` → `Plugins` → `Marketplace`
+2. 搜索 **Flutter**，点击 **Install**
+3. 重启 IDE
+
+重启后，确认 Flutter SDK 路径已配置：
+
+1. `Settings / Preferences` → `Languages & Frameworks` → `Flutter`
+2. 确保 SDK path 指向你的 Flutter 安装目录
+
+初始化项目后若仍有红色错误线，执行 `Tools` → `Dart` → `Restart Dart Analysis Server` 刷新分析服务。
+
+---
+
+#### VS Code
+
+安装以下扩展：
+
+| 扩展 | 说明 |
+|------|------|
+| [**Flutter**](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) | Flutter 框架支持（调试、热重载、Widget 预览） |
+| [**Dart**](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code) | Dart 语言支持（语法高亮、代码补全、静态分析） |
+
+> 安装 Flutter 扩展时会自动安装 Dart 扩展。
+
+安装步骤：
+
+1. `Cmd + Shift + X`（Mac）/ `Ctrl + Shift + X`（Windows）打开扩展面板
+2. 搜索 **Flutter**，点击 **Install**
+3. 重新加载窗口或重启 VS Code
+
+初始化项目后若仍有红色错误线，按 `Cmd + Shift + P` → 输入 `Reload Window` 刷新窗口即可。
+
 ### 初始化
 
 ```bash
