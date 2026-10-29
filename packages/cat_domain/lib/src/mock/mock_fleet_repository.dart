@@ -9,49 +9,49 @@ class MockFleetRepository implements FleetRepository {
   /// 模拟车辆数据 — 8 台车辆，6 在线 2 离线
   final List<Vehicle> _vehicles = [
     Vehicle(
-      id: 'v-001', name: 'CAT-001', type: 'mining_truck',
+      id: 'v-001', name: 'CUSTOM-001', type: 'mining_truck',
       latitude: 39.9042, longitude: 116.4074, altitude: 45.0,
       speed: 23.5, fuel: 78.0, online: true, status: 'moving',
       lastUpdated: DateTime.now().subtract(const Duration(seconds: 15)),
     ),
     Vehicle(
-      id: 'v-002', name: 'CAT-002', type: 'mining_truck',
+      id: 'v-002', name: 'CUSTOM-002', type: 'mining_truck',
       latitude: 39.9082, longitude: 116.4124, altitude: 42.0,
       speed: 15.0, fuel: 62.0, online: true, status: 'loading',
       lastUpdated: DateTime.now().subtract(const Duration(seconds: 30)),
     ),
     Vehicle(
-      id: 'v-003', name: 'CAT-003', type: 'excavator',
+      id: 'v-003', name: 'CUSTOM-003', type: 'excavator',
       latitude: 39.9192, longitude: 116.3924, altitude: 50.0,
       speed: 0.0, fuel: 85.0, online: true, status: 'idle',
       lastUpdated: DateTime.now().subtract(const Duration(minutes: 1)),
     ),
     Vehicle(
-      id: 'v-004', name: 'CAT-004', type: 'bulldozer',
+      id: 'v-004', name: 'CUSTOM-004', type: 'bulldozer',
       latitude: 39.8972, longitude: 116.3874, altitude: 55.0,
       speed: 5.0, fuel: 91.0, online: true, status: 'moving',
       lastUpdated: DateTime.now().subtract(const Duration(seconds: 45)),
     ),
     Vehicle(
-      id: 'v-005', name: 'CAT-005', type: 'mining_truck',
+      id: 'v-005', name: 'CUSTOM-005', type: 'mining_truck',
       latitude: 39.9152, longitude: 116.4274, altitude: 48.0,
       speed: 28.0, fuel: 45.0, online: true, status: 'dumping',
       lastUpdated: DateTime.now().subtract(const Duration(seconds: 10)),
     ),
     Vehicle(
-      id: 'v-006', name: 'CAT-006', type: 'mining_truck',
+      id: 'v-006', name: 'CUSTOM-006', type: 'mining_truck',
       latitude: 39.9122, longitude: 116.4304, altitude: 47.0,
       speed: 18.0, fuel: 55.0, online: true, status: 'moving',
       lastUpdated: DateTime.now().subtract(const Duration(seconds: 20)),
     ),
     Vehicle(
-      id: 'v-007', name: 'CAT-007', type: 'excavator',
+      id: 'v-007', name: 'CUSTOM-007', type: 'excavator',
       latitude: 39.8992, longitude: 116.4024, altitude: 51.0,
       speed: 0.0, fuel: 22.0, online: false, status: 'idle',
       lastUpdated: DateTime.now().subtract(const Duration(hours: 2)),
     ),
     Vehicle(
-      id: 'v-008', name: 'CAT-008', type: 'mining_truck',
+      id: 'v-008', name: 'CUSTOM-008', type: 'mining_truck',
       latitude: 39.9062, longitude: 116.4184, altitude: 44.0,
       speed: 0.0, fuel: 10.0, online: false, status: 'idle',
       lastUpdated: DateTime.now().subtract(const Duration(hours: 3)),

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-/// CAT App HTTP 客户端
+/// CUSTOM App HTTP 客户端
 ///
 /// 基于 Dio 封装，配置基础 URL、超时和拦截器链。
 /// 拦截器顺序：Mock（最高优先级）→ 日志 → 错误处理

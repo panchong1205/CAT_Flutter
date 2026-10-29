@@ -1,5 +1,5 @@
 name: cat_app
-description: "CAT (Computerized Autonomous Transport) - monorepo workspace"
+description: "CUSTOM (Computerized Autonomous Transport) - monorepo workspace"
 publish_to: 'none'
 
 environment:

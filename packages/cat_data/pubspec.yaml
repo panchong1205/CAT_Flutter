@@ -1,5 +1,5 @@
 name: cat_data
-description: Data layer for CAT app - remote API, local storage, cache, sync
+description: Data layer for CUSTOM app - remote API, local storage, cache, sync
 version: 0.0.1
 publish_to: none
 

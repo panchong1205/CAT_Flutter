@@ -1,5 +1,5 @@
 name: cat_native
-description: Native bridge layer for CAT app - platform channels, FFI bindings
+description: Native bridge layer for CUSTOM app - platform channels, FFI bindings
 version: 0.0.1
 publish_to: none
 

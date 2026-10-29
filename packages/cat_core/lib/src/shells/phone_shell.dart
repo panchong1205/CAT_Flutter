@@ -38,7 +38,7 @@ class PhoneShell extends ConsumerWidget {
           // centerTitle=true 时 title 和 trailing slot 竞争空间导致溢出。
           // 通过 leading 占位 + title 居中 + Positioned 右对齐 action 来规避。
           leading: const SizedBox(width: 56),
-          title: const Center(child: Text('CAT Phone')),
+          title: const Center(child: Text('CUSTOM Phone')),
           actions: [
             _NotificationBell(onTap: () => GoRouter.of(context).go('/notifications')),
           ],

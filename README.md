@@ -1,4 +1,4 @@
-# CAT — 无人矿山生产管控终端
+# CUSTOM — 无人矿山生产管控终端
 
 > **C**ommand & **A**wareness **T**erminal  
 > 基于 Flutter 的跨端矿山生产实时管控 Demo —— 车载端 / 平板端 / 手机端

@@ -1,5 +1,5 @@
 name: cat_core
-description: Core infrastructure for CAT app - DI, routing, config, network, storage, logging
+description: Core infrastructure for CUSTOM app - DI, routing, config, network, storage, logging
 version: 0.0.1
 publish_to: none
 

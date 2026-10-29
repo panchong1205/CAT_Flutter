@@ -1,5 +1,5 @@
 name: cat_domain
-description: Domain layer for CAT app - entities, repository interfaces, use cases
+description: Domain layer for CUSTOM app - entities, repository interfaces, use cases
 version: 0.0.1
 publish_to: none
 

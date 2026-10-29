@@ -86,9 +86,9 @@ cd apps/cat_phone && flutter run -d chrome
 > **注意**：当前开发环境仅有 macOS Desktop 和 Chrome 两个 device。macOS Desktop 需要完整 Xcode（当前未安装），Linux device 在 macOS 上不可用。因此三端统一使用 Chrome 模拟，通过调整窗口尺寸模拟不同终端形态。
 
 **预览效果**：
-- 车载：横屏窗口，深色背景，大字 "CAT Vehicle Terminal"
-- 平板：可调整大小窗口，居中显示 "CAT Tablet Console"  
-- 手机：竖屏窄窗口，显示 "CAT Phone Dashboard"
+- 车载：横屏窗口，深色背景，大字 "CUSTOM Vehicle Terminal"
+- 平板：可调整大小窗口，居中显示 "CUSTOM Tablet Console"  
+- 手机：竖屏窄窗口，显示 "CUSTOM Phone Dashboard"
 
 **交付物检查清单**：
 - [ ] `melos.yaml` 配置正确

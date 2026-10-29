@@ -9,6 +9,6 @@ void main() {
     await tester.pumpWidget(const PhoneApp());
     await tester.pump();
 
-    expect(find.text('CAT Phone'), findsOneWidget);
+    expect(find.text('CUSTOM Phone'), findsOneWidget);
   });
 }

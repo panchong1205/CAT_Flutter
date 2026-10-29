@@ -1,5 +1,5 @@
 name: cat_features
-description: Business feature modules for CAT app - dashboard, fleet, mission, alert, etc.
+description: Business feature modules for CUSTOM app - dashboard, fleet, mission, alert, etc.
 version: 0.0.1
 publish_to: none
 

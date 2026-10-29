@@ -120,7 +120,7 @@ class _VehicleShellState extends ConsumerState<VehicleShell> {
                       const SizedBox(height: 24),
                       Icon(Icons.precision_manufacturing, size: 48, color: colors.primary),
                       const SizedBox(height: 12),
-                      Text('CAT Vehicle', style: textTheme.headlineMedium?.copyWith(color: colors.primary)),
+                      Text('CUSTOM Vehicle', style: textTheme.headlineMedium?.copyWith(color: colors.primary)),
                       const SizedBox(height: 4),
                       Text('车载终端', style: textTheme.bodyLarge?.copyWith(color: CatColors.vehicleOnSurface)),
                       const SizedBox(height: 20),

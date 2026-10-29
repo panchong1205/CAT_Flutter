@@ -9,13 +9,13 @@ class MockAlertRepository implements AlertRepository {
   final List<Alert> _alerts = [
     Alert(
       id: 'alert-001', title: '车辆超速告警',
-      message: 'CAT-001 在矿区主路段超速行驶，当前速度 45km/h（限速 30km/h）',
+      message: 'CUSTOM-001 在矿区主路段超速行驶，当前速度 45km/h（限速 30km/h）',
       level: 'critical', source: 'vehicle', vehicleId: 'v-001',
       acknowledged: false, createdAt: DateTime.now().subtract(const Duration(minutes: 10)),
     ),
     Alert(
       id: 'alert-002', title: '油量过低告警',
-      message: 'CAT-008 油量不足 10%，请尽快安排加油',
+      message: 'CUSTOM-008 油量不足 10%，请尽快安排加油',
       level: 'warning', source: 'vehicle', vehicleId: 'v-008',
       acknowledged: false, createdAt: DateTime.now().subtract(const Duration(minutes: 25)),
     ),
@@ -27,7 +27,7 @@ class MockAlertRepository implements AlertRepository {
     ),
     Alert(
       id: 'alert-004', title: '装载偏差告警',
-      message: 'CAT-003 装载点 A 的装载量偏差超过 5%，请校准传感器',
+      message: 'CUSTOM-003 装载点 A 的装载量偏差超过 5%，请校准传感器',
       level: 'info', source: 'system', vehicleId: 'v-003',
       acknowledged: true, createdAt: DateTime.now().subtract(const Duration(hours: 3)),
       acknowledgedAt: DateTime.now().subtract(const Duration(hours: 2)),
@@ -41,7 +41,7 @@ class MockAlertRepository implements AlertRepository {
     ),
     Alert(
       id: 'alert-006', title: '车辆故障告警',
-      message: 'CAT-007 发动机温度异常，建议停机检查',
+      message: 'CUSTOM-007 发动机温度异常，建议停机检查',
       level: 'critical', source: 'vehicle', vehicleId: 'v-007',
       acknowledged: true, createdAt: DateTime.now().subtract(const Duration(hours: 5)),
       acknowledgedAt: DateTime.now().subtract(const Duration(hours: 4)),

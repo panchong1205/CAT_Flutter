@@ -8,7 +8,7 @@ import 'tables/sync_queue_table.dart';
 
 part 'app_database.g.dart';
 
-/// CAT App 本地数据库
+/// CUSTOM App 本地数据库
 ///
 /// 基于 Drift (SQLite) 实现，管理车辆、任务、告警、设备、离线队列的本地持久化存储。
 /// 所有 CRUD 操作直接定义在此类中，避免 DAO 层的循环导入问题。

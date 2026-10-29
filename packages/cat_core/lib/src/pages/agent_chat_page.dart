@@ -126,7 +126,7 @@ class _AgentChatPageState extends ConsumerState<AgentChatPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('CAT AI 助手', style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                  Text('CUSTOM AI 助手', style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                   Row(
                     children: [
                       Container(
@@ -195,7 +195,7 @@ class _AgentChatPageState extends ConsumerState<AgentChatPage> {
         children: [
           Icon(Icons.smart_toy, size: 64, color: Colors.grey.withAlpha(80)),
           const SizedBox(height: 16),
-          Text('CAT AI 助手', style: textTheme.headlineSmall?.copyWith(color: Colors.grey)),
+          Text('CUSTOM AI 助手', style: textTheme.headlineSmall?.copyWith(color: Colors.grey)),
           const SizedBox(height: 8),
           Text(
             '输入消息开始对话，或点击下方快捷操作',

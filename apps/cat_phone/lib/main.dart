@@ -22,7 +22,7 @@ class PhoneApp extends StatelessWidget {
     final router = createAppRouter(AppType.phone);
 
     return MaterialApp.router(
-      title: 'CAT Phone',
+      title: 'CUSTOM Phone',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,

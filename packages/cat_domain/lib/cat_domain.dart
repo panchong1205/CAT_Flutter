@@ -1,4 +1,4 @@
-/// 无人矿山 CAT 系统 — 领域层
+/// 无人矿山 CUSTOM 系统 — 领域层
 ///
 /// 包含核心业务实体、Repository 抽象接口、UseCase 和 Mock 实现。
 library cat_domain;

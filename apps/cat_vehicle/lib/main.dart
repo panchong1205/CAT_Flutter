@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cat_design_system/cat_design_system.dart';
 import 'package:cat_core/cat_core.dart';
 
-/// CAT Vehicle App — 车载终端入口
+/// CUSTOM Vehicle App — 车载终端入口
 ///
 /// 强制横屏显示，使用车载暗色高对比度主题。
 void main() async {
@@ -28,7 +28,7 @@ class VehicleApp extends StatelessWidget {
     // ProviderScope 包裹整个 App，使得 Riverpod Provider 可用
     return ProviderScope(
       child: MaterialApp.router(
-        title: 'CAT Vehicle',
+        title: 'CUSTOM Vehicle',
         debugShowCheckedModeBanner: false,
         theme: CatThemes.vehicleTheme,
         routerConfig: router,

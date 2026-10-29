@@ -9,7 +9,7 @@ part 'vehicle.freezed.dart';
 class Vehicle with _$Vehicle {
   const factory Vehicle({
     required String id,           // 车辆唯一标识
-    required String name,         // 车辆编号 / 名称，如 "CAT-001"
+    required String name,         // 车辆编号 / 名称，如 "CUSTOM-001"
     required String type,         // 车辆类型：mining_truck / excavator / bulldozer
     required double latitude,     // 当前纬度
     required double longitude,    // 当前经度

@@ -1,4 +1,4 @@
-/// CAT Data Layer
+/// CUSTOM Data Layer
 ///
 /// 数据层公开 API，包含：
 /// - Drift 本地数据库（跨平台：原生文件 / Web 内存）

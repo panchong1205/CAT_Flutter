@@ -320,7 +320,7 @@ class _StatusResponse implements _ResponseTemplate {
 class _HelpResponse implements _ResponseTemplate {
   @override
   String buildText(String input, List<AgentMessage> history) {
-    return '您好！我是 CAT 矿山运营 AI 助手，可以帮您：\n\n📊 查询车队状态 — 输入「车队」或「设备」\n🚨 处理告警 — 输入「告警」\n📋 管理任务 — 输入「任务」\n📈 查看运营数据 — 输入「状态」\n💡 获取运营建议 — 输入「建议」\n\n如需更多帮助，请随时告诉我！';
+    return '您好！我是 CUSTOM 矿山运营 AI 助手，可以帮您：\n\n📊 查询车队状态 — 输入「车队」或「设备」\n🚨 处理告警 — 输入「告警」\n📋 管理任务 — 输入「任务」\n📈 查看运营数据 — 输入「状态」\n💡 获取运营建议 — 输入「建议」\n\n如需更多帮助，请随时告诉我！';
   }
 
   @override
@@ -370,7 +370,7 @@ class _SuggestionResponse implements _ResponseTemplate {
 class _DefaultResponse implements _ResponseTemplate {
   @override
   String buildText(String input, List<AgentMessage> history) {
-    return '收到您的消息：「$input」。\n\n我是 CAT 矿山运营 AI 助手，可以帮您查询车队状态、处理告警、管理任务等。请输入「帮助」查看我支持的功能列表。';
+    return '收到您的消息：「$input」。\n\n我是 CUSTOM 矿山运营 AI 助手，可以帮您查询车队状态、处理告警、管理任务等。请输入「帮助」查看我支持的功能列表。';
   }
 
   @override

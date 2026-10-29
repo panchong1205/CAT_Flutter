@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cat_design_system/cat_design_system.dart';
 import 'package:cat_core/cat_core.dart';
 
-/// CAT Tablet App — 平板调度终端入口
+/// CUSTOM Tablet App — 平板调度终端入口
 ///
 /// 自适应窗口大小：宽屏 NavigationRail 双栏 / 窄屏 BottomNav 单栏。
 void main() async {
@@ -22,7 +22,7 @@ class TabletApp extends StatelessWidget {
     // ProviderScope 包裹整个 App，使得 Riverpod Provider 可用
     return ProviderScope(
       child: MaterialApp.router(
-        title: 'CAT Tablet',
+        title: 'CUSTOM Tablet',
         debugShowCheckedModeBanner: false,
         theme: CatThemes.tabletTheme,
         routerConfig: router,

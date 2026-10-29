@@ -19,7 +19,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Vehicle {
   String get id => throw _privateConstructorUsedError; // 车辆唯一标识
   String get name =>
-      throw _privateConstructorUsedError; // 车辆编号 / 名称，如 "CAT-001"
+      throw _privateConstructorUsedError; // 车辆编号 / 名称，如 "CUSTOM-001"
   String get type =>
       throw _privateConstructorUsedError; // 车辆类型：mining_truck / excavator / bulldozer
   double get latitude => throw _privateConstructorUsedError; // 当前纬度
@@ -259,7 +259,7 @@ class _$VehicleImpl implements _Vehicle {
   // 车辆唯一标识
   @override
   final String name;
-  // 车辆编号 / 名称，如 "CAT-001"
+  // 车辆编号 / 名称，如 "CUSTOM-001"
   @override
   final String type;
   // 车辆类型：mining_truck / excavator / bulldozer
@@ -357,7 +357,7 @@ abstract class _Vehicle implements Vehicle {
   @override
   String get id; // 车辆唯一标识
   @override
-  String get name; // 车辆编号 / 名称，如 "CAT-001"
+  String get name; // 车辆编号 / 名称，如 "CUSTOM-001"
   @override
   String get type; // 车辆类型：mining_truck / excavator / bulldozer
   @override
