@@ -28,7 +28,6 @@ class NotificationCenterPage extends ConsumerWidget {
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 4, 24, 20),
-          child: Text('消息通知汇总', style: TextStyle(color: Colors.grey)),
         ),
         Expanded(
           child: notificationsAsync.when(

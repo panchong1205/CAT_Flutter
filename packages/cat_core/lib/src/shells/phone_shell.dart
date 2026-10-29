@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../providers/alert_provider.dart';
+import '../providers/notification_provider.dart';
 
 /// 手机端底部导航 Shell
 ///
@@ -38,11 +39,8 @@ class PhoneShell extends ConsumerWidget {
           // 通过 leading 占位 + title 居中 + Positioned 右对齐 action 来规避。
           leading: const SizedBox(width: 56),
           title: const Center(child: Text('CAT Phone')),
-          actions: const [
-            SizedBox(
-              width: 56,
-              child: _AlertActionIcon(),
-            ),
+          actions: [
+            _NotificationBell(onTap: () => GoRouter.of(context).go('/notifications')),
           ],
         ),
       ),
@@ -91,29 +89,38 @@ class PhoneShell extends ConsumerWidget {
   }
 }
 
-/// AppBar 右侧告警图标（独立 ConsumerWidget 读取 provider）
+/// AppBar 右侧通知铃铛图标
 ///
-/// 显示通知铃铛图标，未确认告警时叠加 Badge 计数。
-class _AlertActionIcon extends ConsumerWidget {
-  const _AlertActionIcon();
+/// 点击跳转到通知中心页面，未读通知时显示红点。
+class _NotificationBell extends ConsumerWidget {
+  final VoidCallback onTap;
+
+  const _NotificationBell({required this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
-    final alertCountAsync = ref.watch(unacknowledgedAlertCountProvider);
+    final unreadCount = ref.watch(unreadNotificationCountProvider);
 
-    return alertCountAsync.when(
-      loading: () => const Icon(Icons.notifications_outlined),
-      error: (_, __) => const Icon(Icons.notifications_outlined),
-      data: (count) => Badge(
-        backgroundColor: colors.error,
-        isLabelVisible: count > 0,
-        smallSize: 14,
-        label: Text(
-          count > 99 ? '99+' : '$count',
-          style: const TextStyle(fontSize: 9, color: Colors.white),
+    return SizedBox(
+      width: 56,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(20),
+          child: Center(
+            child: Badge(
+              backgroundColor: colors.error,
+              isLabelVisible: unreadCount > 0,
+              smallSize: 10,
+              child: Icon(
+                Icons.notifications_outlined,
+                color: colors.onSurface,
+              ),
+            ),
+          ),
         ),
-        child: const Icon(Icons.notifications_outlined),
       ),
     );
   }

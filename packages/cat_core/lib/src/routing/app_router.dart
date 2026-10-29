@@ -39,6 +39,16 @@ GoRouter createAppRouter(AppType appType) {
             child: const VehicleFullscreenMapPage(),
           ),
         ),
+      // 通知中心（手机端顶层路由，通过 AppBar 铃铛图标进入）
+      if (appType == AppType.phone)
+        GoRoute(
+          path: '/notifications',
+          parentNavigatorKey: rootNavigatorKey,
+          pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: const NotificationCenterPage(title: '通知中心'),
+          ),
+        ),
     ],
   );
 }

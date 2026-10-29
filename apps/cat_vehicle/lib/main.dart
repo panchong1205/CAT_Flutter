@@ -32,7 +32,27 @@ class VehicleApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: CatThemes.vehicleTheme,
         routerConfig: router,
+        builder: (context, child) => _clampViewInsets(context, child),
       ),
     );
   }
+}
+
+/// 修复 Flutter Web 键盘收起时 viewInsets 为负值的已知 bug
+///
+/// 将 viewInsets 各分量 clamp 到 [0, ∞)，防止断言失败。
+Widget _clampViewInsets(BuildContext context, Widget? child) {
+  final data = MediaQuery.of(context);
+  final insets = data.viewInsets;
+  return MediaQuery(
+    data: data.copyWith(
+      viewInsets: EdgeInsets.fromLTRB(
+        insets.left.clamp(0.0, double.infinity),
+        insets.top.clamp(0.0, double.infinity),
+        insets.right.clamp(0.0, double.infinity),
+        insets.bottom.clamp(0.0, double.infinity),
+      ),
+    ),
+    child: child!,
+  );
 }

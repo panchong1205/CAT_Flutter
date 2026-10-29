@@ -26,7 +26,25 @@ class TabletApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: CatThemes.tabletTheme,
         routerConfig: router,
+        builder: (context, child) => _clampViewInsets(context, child),
       ),
     );
   }
+}
+
+/// 修复 Flutter Web 键盘收起时 viewInsets 为负值的已知 bug
+Widget _clampViewInsets(BuildContext context, Widget? child) {
+  final data = MediaQuery.of(context);
+  final insets = data.viewInsets;
+  return MediaQuery(
+    data: data.copyWith(
+      viewInsets: EdgeInsets.fromLTRB(
+        insets.left.clamp(0.0, double.infinity),
+        insets.top.clamp(0.0, double.infinity),
+        insets.right.clamp(0.0, double.infinity),
+        insets.bottom.clamp(0.0, double.infinity),
+      ),
+    ),
+    child: child!,
+  );
 }

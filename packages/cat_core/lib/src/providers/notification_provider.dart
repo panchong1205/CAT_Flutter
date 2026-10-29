@@ -108,3 +108,15 @@ String _approvalTypeLabel(String type) {
     _ => '其他',
   };
 }
+
+/// 未读通知计数
+///
+/// 用于 AppBar 铃铛图标的红点显示。
+final unreadNotificationCountProvider = Provider<int>((ref) {
+  final notificationsAsync = ref.watch(notificationsProvider);
+  return notificationsAsync.when(
+    data: (list) => list.where((n) => !n.isRead).length,
+    loading: () => 0,
+    error: (_, __) => 0,
+  );
+});
