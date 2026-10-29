@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cat_design_system/cat_design_system.dart';
 import 'package:cat_domain/cat_domain.dart';
 import '../providers/patrol_provider.dart';
+import '../providers/selected_source_provider.dart';
 
 /// 巡检页面
 ///
@@ -21,8 +22,20 @@ class _PatrolPageState extends ConsumerState<PatrolPage> {
   @override
   Widget build(BuildContext context) {
     final patrolsAsync = ref.watch(patrolPointsProvider);
+    final highlightId = ref.watch(selectedSourceIdProvider);
     final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
+
+    // 通知中心跳转：高亮后自动清除，防止下次进入时重复触发
+    ref.listen(selectedSourceIdProvider, (_, targetId) {
+      if (targetId != null) {
+        Future.delayed(const Duration(seconds: 3), () {
+          if (mounted && ref.read(selectedSourceIdProvider) == targetId) {
+            ref.read(selectedSourceIdProvider.notifier).state = null;
+          }
+        });
+      }
+    });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +77,7 @@ class _PatrolPageState extends ConsumerState<PatrolPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 itemCount: filtered.length,
                 itemBuilder: (context, index) =>
-                    _PatrolCard(point: filtered[index], onCheckIn: _handleCheckIn),
+                    _PatrolCard(point: filtered[index], onCheckIn: _handleCheckIn, highlighted: filtered[index].id == highlightId),
               );
             },
           ),
@@ -129,8 +142,9 @@ class _PatrolPageState extends ConsumerState<PatrolPage> {
 class _PatrolCard extends StatelessWidget {
   final PatrolPoint point;
   final ValueChanged<PatrolPoint> onCheckIn;
+  final bool highlighted;
 
-  const _PatrolCard({required this.point, required this.onCheckIn});
+  const _PatrolCard({required this.point, required this.onCheckIn, this.highlighted = false});
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +156,14 @@ class _PatrolCard extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
+      elevation: highlighted ? 4 : 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: highlighted ? colors.primary : Colors.transparent,
+          width: highlighted ? 2 : 0,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(

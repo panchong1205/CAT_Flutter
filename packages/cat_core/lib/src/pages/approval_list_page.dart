@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cat_design_system/cat_design_system.dart';
 import 'package:cat_domain/cat_domain.dart';
 import '../providers/approval_provider.dart';
+import '../providers/selected_source_provider.dart';
 import 'approval_detail_page.dart';
 
 /// 审批列表页面
@@ -24,6 +25,17 @@ class _ApprovalListPageState extends ConsumerState<ApprovalListPage> {
     final approvalsAsync = ref.watch(approvalsProvider);
     final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
+
+    // 通知中心跳转：监听 + 首次检查，确保进入页面时自动打开对应审批详情
+    final targetId = ref.watch(selectedSourceIdProvider);
+    ref.listen(selectedSourceIdProvider, (_, next) {
+      _tryOpenApprovalDetail(ref, next);
+    });
+    if (targetId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _tryOpenApprovalDetail(ref, targetId);
+      });
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,6 +102,18 @@ class _ApprovalListPageState extends ConsumerState<ApprovalListPage> {
         builder: (_) => ApprovalDetailPage(request: request),
       ),
     );
+  }
+
+  void _tryOpenApprovalDetail(WidgetRef ref, String? targetId) {
+    if (targetId == null) return;
+    final approvals = ref.read(approvalsProvider).valueOrNull;
+    if (approvals != null) {
+      final match = approvals.where((a) => a.id == targetId).toList();
+      if (match.isNotEmpty) {
+        ref.read(selectedSourceIdProvider.notifier).state = null;
+        _openDetail(match.first);
+      }
+    }
   }
 }
 

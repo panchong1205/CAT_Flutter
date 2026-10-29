@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:cat_design_system/cat_design_system.dart';
 import 'package:cat_domain/cat_domain.dart';
 import '../providers/notification_provider.dart';
+import '../providers/selected_source_provider.dart';
 
 /// 通知中心页面
 ///
@@ -59,13 +61,13 @@ class NotificationCenterPage extends ConsumerWidget {
   }
 }
 
-class _NotificationTile extends StatelessWidget {
+class _NotificationTile extends ConsumerWidget {
   final NotificationMessage message;
 
   const _NotificationTile({required this.message});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -87,13 +89,11 @@ class _NotificationTile extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       child: InkWell(
         onTap: () {
-          // 点击跳转到来源页面（简化处理，仅展示提示）
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('跳转到: ${message.sourceRoute}'),
-              duration: const Duration(seconds: 1),
-            ),
-          );
+          final route = message.sourceRoute;
+          if (route != null && route.isNotEmpty) {
+            ref.read(selectedSourceIdProvider.notifier).state = message.sourceId;
+            GoRouter.of(context).go(route);
+          }
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(

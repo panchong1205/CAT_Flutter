@@ -11,6 +11,7 @@ export 'src/providers/map_provider.dart';
 export 'src/providers/patrol_provider.dart';
 export 'src/providers/approval_provider.dart';
 export 'src/providers/notification_provider.dart';
+export 'src/providers/selected_source_provider.dart';
 export 'src/network/connectivity_service.dart';
 export 'src/widgets/connectivity_badge.dart';
 export 'src/widgets/vehicle_status_badge.dart';

@@ -5,6 +5,7 @@ import 'package:cat_domain/cat_domain.dart';
 import 'package:cat_data/cat_data.dart';
 import '../providers/alert_provider.dart';
 import '../providers/agent_provider.dart';
+import '../providers/selected_source_provider.dart';
 import '../widgets/alert_severity_indicator.dart';
 import 'alert_detail_page.dart';
 
@@ -62,6 +63,18 @@ class _AlertListPageState extends ConsumerState<AlertListPage> {
         }
       });
     });
+
+    // 通知中心跳转：监听 + 首次检查，确保进入页面时自动打开对应告警详情
+    final targetId = ref.watch(selectedSourceIdProvider);
+    ref.listen(selectedSourceIdProvider, (_, next) {
+      _tryOpenAlertDetail(ref, next);
+    });
+    // 首次进入时已有值（listen 不会触发初始值）
+    if (targetId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _tryOpenAlertDetail(ref, targetId);
+      });
+    }
 
     return Column(
       children: [
@@ -345,6 +358,19 @@ class _AlertListPageState extends ConsumerState<AlertListPage> {
         builder: (_) => AlertDetailPage(alert: alert),
       ),
     );
+  }
+
+  /// 尝试根据 sourceId 打开对应告警详情（由通知中心跳转触发）
+  void _tryOpenAlertDetail(WidgetRef ref, String? targetId) {
+    if (targetId == null) return;
+    final alerts = ref.read(alertsProvider).valueOrNull;
+    if (alerts != null) {
+      final match = alerts.where((a) => a.id == targetId).toList();
+      if (match.isNotEmpty) {
+        ref.read(selectedSourceIdProvider.notifier).state = null;
+        _navigateToDetail(match.first);
+      }
+    }
   }
 }
 
