@@ -1,6 +1,8 @@
 import 'package:cat_domain/cat_domain.dart';
 
-/// 将 API 返回的 JSON Map 转换为 Mission 领域实体
+/// 任务 API JSON 序列化工具
+
+/// 将 API 返回的 JSON Map 转换为 [Mission] 领域实体
 Mission missionFromJson(Map<String, dynamic> json) => Mission(
       id: json['id'] as String,
       name: json['name'] as String,

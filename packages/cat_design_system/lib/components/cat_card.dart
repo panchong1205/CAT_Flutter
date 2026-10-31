@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// 设计系统通用卡片组件
+///
+/// 提供标准化的卡片容器，支持 header/footer 分区、可点击态、
+/// 圆角阴影和自定义 padding/color。所有业务卡片基于 [CatCard] 构建。
 class CatCard extends StatelessWidget {
   final Widget? child;
   final VoidCallback? onTap;

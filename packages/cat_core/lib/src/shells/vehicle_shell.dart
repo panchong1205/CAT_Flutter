@@ -21,15 +21,15 @@ class VehicleShell extends ConsumerStatefulWidget {
 }
 
 class _VehicleShellState extends ConsumerState<VehicleShell> {
+  /// 驾驶员专属导航项（精简为 5 项核心功能）
+  ///
+  /// 与平板/手机的全功能导航不同，车载终端仅展示驾驶员角色所需的功能：
+  /// 矿区地图、我的任务、车辆状态、告警、AI 助手。
   static const _navItems = [
-    (Icons.dashboard, '运营概览', '/dashboard'),
     (Icons.map, '矿区地图', '/map'),
-    (Icons.assignment, '任务管理', '/missions'),
-    (Icons.warning_amber, '告警中心', '/alerts'),
-    (Icons.precision_manufacturing, '车队管理', '/fleet'),
-    (Icons.assignment_turned_in, '巡检打卡', '/patrol'),
-    (Icons.fact_check, '审批管理', '/approval'),
-    (Icons.notifications, '通知中心', '/notifications'),
+    (Icons.assignment, '我的任务', '/missions'),
+    (Icons.directions_car, '车辆状态', '/vehicle-status'),
+    (Icons.warning_amber, '告警', '/alerts'),
     (Icons.smart_toy, 'AI 助手', '/agent'),
   ];
 
@@ -50,6 +50,10 @@ class _VehicleShellState extends ConsumerState<VehicleShell> {
     super.dispose();
   }
 
+  /// 处理键盘快捷键事件
+  ///
+  /// 全屏告警弹窗期间：Enter/Space 确认，Escape 关闭。
+  /// 非告警期间：Escape 返回上一页，F1-F5 快速导航 5 个菜单项。
   bool _handleKeyEvent(KeyEvent event) {
     if (event is KeyDownEvent) {
       // 全屏告警弹窗时的快捷键处理
@@ -75,6 +79,7 @@ class _VehicleShellState extends ConsumerState<VehicleShell> {
         LogicalKeyboardKey.f2: 1,
         LogicalKeyboardKey.f3: 2,
         LogicalKeyboardKey.f4: 3,
+        LogicalKeyboardKey.f5: 4,
       };
       final idx = keyMap[event.logicalKey];
       if (idx != null) {
@@ -166,7 +171,9 @@ class _VehicleShellState extends ConsumerState<VehicleShell> {
     });
   }
 
-  /// 确认当前告警
+  /// 确认当前告警（操作员确认）
+  ///
+  /// 关闭弹窗，刷新告警列表，并显示确认成功 SnackBar。
   void _acknowledgeCurrentAlert() {
     setState(() => _alertPopupVisible = false);
     _currentAlertEvent = null;
@@ -356,7 +363,7 @@ class _VehicleShellState extends ConsumerState<VehicleShell> {
             ],
           ),
           const SizedBox(height: 8),
-          Text('F1-F4 快捷切换 | Esc 返回', style: textTheme.bodySmall?.copyWith(color: CatColors.vehicleOnSurface, fontSize: 10)),
+          Text('F1-F5 快捷切换 | Esc 返回', style: textTheme.bodySmall?.copyWith(color: CatColors.vehicleOnSurface, fontSize: 10)),
         ],
       ),
     );

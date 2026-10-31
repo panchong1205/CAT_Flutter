@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
+/// 按钮变体枚举
 enum CatButtonVariant { filled, outlined, text, danger }
+/// 按钮尺寸枚举
 enum CatButtonSize { small, medium, large }
 
+/// 设计系统通用按钮组件
+///
+/// 支持四种变体（filled/outlined/text/danger）、三种尺寸（small/medium/large）、
+/// 前后图标、加载态和全宽模式。
+/// 所有业务页面的按钮操作统一使用 [CatButton]。
 class CatButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;

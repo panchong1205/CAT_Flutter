@@ -49,6 +49,7 @@ class AlertRepoImpl implements AlertRepository {
   // 后台刷新
   // ============================================================
 
+  /// 异步获取远端告警数据并批量写入本地数据库
   Future<void> _refreshAlerts() async {
     try {
       final response = await _httpClient.get('/alerts');

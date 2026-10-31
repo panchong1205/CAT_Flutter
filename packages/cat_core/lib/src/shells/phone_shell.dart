@@ -6,8 +6,9 @@ import '../providers/notification_provider.dart';
 
 /// 手机端底部导航 Shell
 ///
-/// 配合 StatefulShellRoute.indexedStack 使用，由 GoRouter 管理分支索引。
-/// Step 9 新增告警徽章 — 导航栏「告警」tab 上显示未确认告警数量。
+/// 配合 [StatefulShellRoute.indexedStack] 使用，由 GoRouter 管理分支索引。
+/// 6 个底部导航 tab，告警 tab 上显示未确认告警计数徽章，
+/// AppBar 右侧通知铃铛可跳转到通知中心。
 class PhoneShell extends ConsumerWidget {
   final StatefulNavigationShell navigationShell;
 
@@ -61,7 +62,10 @@ class PhoneShell extends ConsumerWidget {
     );
   }
 
-  /// 构建导航栏图标，告警 tab 附加未确认计数徽章
+  /// 构建导航栏图标
+  ///
+  /// 告警 tab（索引 2）额外订阅 [unacknowledgedAlertCountProvider]，
+  /// 在图标右上角叠加 [Badge] 显示未确认告警数量（超过 99 显示"99+"）。
   Widget _buildNavIcon(BuildContext context, WidgetRef ref, int index, IconData icon) {
     // 仅在告警 tab（索引 2）上显示徽章
     if (index != 2) {

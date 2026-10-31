@@ -1,6 +1,8 @@
 import 'package:cat_domain/cat_domain.dart';
 
-/// 将 API 返回的 JSON Map 转换为 Alert 领域实体
+/// 告警 API JSON 序列化工具
+
+/// 将 API 返回的 JSON Map 转换为 [Alert] 领域实体
 Alert alertFromJson(Map<String, dynamic> json) => Alert(
       id: json['id'] as String,
       title: json['title'] as String,

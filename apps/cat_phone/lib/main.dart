@@ -3,6 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cat_core/cat_core.dart';
 
+/// CUSTOM Phone App — 手机端入口
+///
+/// 锁定竖屏方向，使用 [PhoneShell] 底部导航栏布局。
+/// 基于 [StatefulShellRoute.indexedStack] 管理 6 个分支 tab。
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -14,6 +18,9 @@ void main() async {
   runApp(const ProviderScope(child: PhoneApp()));
 }
 
+/// 手机端 App 根组件
+///
+/// 配置 Material 3 亮色主题 + GoRouter 路由 + viewInsets clamp 修复。
 class PhoneApp extends StatelessWidget {
   const PhoneApp({super.key});
 

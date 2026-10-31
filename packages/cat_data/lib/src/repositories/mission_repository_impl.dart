@@ -53,6 +53,7 @@ class MissionRepoImpl implements MissionRepository {
   // 后台刷新
   // ============================================================
 
+  /// 异步获取远端任务数据并批量写入本地数据库
   Future<void> _refreshMissions() async {
     try {
       final response = await _httpClient.get('/missions');

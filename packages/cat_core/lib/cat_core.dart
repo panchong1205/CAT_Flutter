@@ -1,3 +1,12 @@
+/// CUSTOM Core Layer
+///
+/// 核心业务层公开 API，包含：
+/// - GoRouter 三端路由配置
+/// - GetIt DI 容器初始化
+/// - Riverpod Provider（车队/任务/告警/Dashboard/Agent/通知/离线监测）
+/// - Shell 组件（车载/平板/手机 三端自适应导航结构）
+/// - 可复用业务组件（车辆卡片/任务卡片/地图/Agent 对话组件等）
+/// - 所有业务页面
 export 'src/routing/app_router.dart';
 export 'src/di/di_container.dart';
 export 'src/providers/dashboard_stats_provider.dart';

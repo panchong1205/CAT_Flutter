@@ -194,12 +194,14 @@ class AgentChatService {
 
   // --- 私有方法 ---
 
+  /// 生成带前缀的唯一消息 ID
   String _nextId(String prefix) {
     final count = (_messageCounter[prefix] ?? 0) + 1;
     _messageCounter[prefix] = count;
     return '${prefix}_${DateTime.now().millisecondsSinceEpoch}_$count';
   }
 
+  /// 按关键词匹配回复模板，无匹配时返回默认模板
   static _ResponseTemplate _matchTemplate(String content) {
     for (final entry in _responseTemplates.entries) {
       if (content.contains(entry.key)) {
@@ -209,6 +211,7 @@ class AgentChatService {
     return _defaultResponse;
   }
 
+  /// 判断字符是否为中文字符（Unicode CJK 范围）
   static bool _isChineseChar(String char) {
     final code = char.codeUnitAt(0);
     return code >= 0x4E00 && code <= 0x9FFF;
@@ -216,6 +219,9 @@ class AgentChatService {
 }
 
 /// 回复模板抽象接口
+///
+/// 每种对话场景（告警/车队/任务/状态/帮助/建议）对应一个实现类，
+/// 提供对应的 [buildText] 和可选的 [buildCards] 输出。
 abstract class _ResponseTemplate {
   String buildText(String input, List<AgentMessage> history);
   List<AgentCard>? buildCards(String input, List<AgentMessage> history);

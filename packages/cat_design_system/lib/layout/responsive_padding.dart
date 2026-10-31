@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'device_class_provider.dart';
 
+/// 响应式 Padding 组件
+///
+/// 根据 [DeviceClassProvider] 的当前设备类型自动切换 padding 值，
+/// phone 默认 12pt、tablet 默认 20pt、desktop 默认 28pt。
+/// 各端均可通过参数覆盖默认值。
 class ResponsivePadding extends StatelessWidget {
   final Widget child;
   final EdgeInsets? phonePadding;

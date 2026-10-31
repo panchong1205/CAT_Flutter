@@ -1,6 +1,10 @@
 import 'package:cat_domain/cat_domain.dart';
 
-/// 将 API 返回的 JSON Map 转换为 Vehicle 领域实体
+/// 车队/设备 API JSON 序列化工具
+///
+/// 提供 REST API 返回的 JSON Map 到领域实体 [Vehicle]/[Device] 的转换函数。
+
+/// 将 API 返回的 JSON Map 转换为 [Vehicle] 领域实体
 Vehicle vehicleFromJson(Map<String, dynamic> json) => Vehicle(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -15,7 +19,7 @@ Vehicle vehicleFromJson(Map<String, dynamic> json) => Vehicle(
       lastUpdated: DateTime.fromMillisecondsSinceEpoch(json['lastUpdated'] as int),
     );
 
-/// 将 API 返回的 JSON Map 转换为 Device 领域实体
+/// 将 API 返回的 JSON Map 转换为 [Device] 领域实体
 Device deviceFromJson(Map<String, dynamic> json) => Device(
       id: json['id'] as String,
       name: json['name'] as String,

@@ -3,8 +3,21 @@ import 'package:cat_domain/cat_domain.dart';
 import 'package:cat_data/cat_data.dart';
 import '../network/connectivity_service.dart';
 
+/// 全局 DI 容器实例
+///
+/// 使用 [GetIt] 作为轻量级服务定位器，生命周期与 app 一致。
 final GetIt di = GetIt.instance;
 
+/// 初始化所有依赖注入绑定
+///
+/// 注册顺序：
+/// 1. HTTP 客户端（带 Mock 拦截器）
+/// 2. Drift 数据库（离线存储）
+/// 3. Repository 实现（离线优先策略）
+/// 4. WebSocket 服务（实时推送）
+/// 5. 网络监测服务
+/// 6. Agent/巡检/审批仓库
+/// 7. 离线同步引擎（绑定网络状态变化）
 Future<void> initializeDependencies() async {
   // HTTP 客户端（Mock 拦截器）
   final httpClient = CatHttpClient(interceptors: [MockInterceptor()]);

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
+/// Badge 颜色变体枚举
 enum CatBadgeVariant { primary, success, warning, danger, info, neutral }
 
+/// 设计系统徽章组件
+///
+/// 以圆角矩形标签展示状态、标签或分类信息，
+/// 支持六种颜色变体、实心/描边两种样式和可选图标。
 class CatBadge extends StatelessWidget {
   final String label;
   final CatBadgeVariant variant;

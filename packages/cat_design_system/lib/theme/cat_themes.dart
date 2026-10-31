@@ -2,9 +2,19 @@ import 'package:flutter/material.dart';
 import '../tokens/colors.dart';
 import '../tokens/typography.dart';
 
+/// 设计系统主题管理
+///
+/// 提供三套 Material 3 主题配置，对应三端设备形态：
+/// - [vehicleTheme] — 车载端深色高对比主题
+/// - [tabletTheme] — 平板端标准浅色主题
+/// - [phoneTheme] — 手机端紧凑浅色主题
+///
+/// 每套主题定义完整的 colorScheme、textTheme、
+/// 卡片/AppBar/输入框/导航栏等组件样式。
 class CatThemes {
   CatThemes._();
 
+  /// 车载端主题：深色背景 + 高对比度色彩，适配大屏远距离阅读
   static ThemeData get vehicleTheme {
     return ThemeData(
       brightness: Brightness.dark,
@@ -77,6 +87,7 @@ class CatThemes {
     );
   }
 
+  /// 平板端主题：标准浅色背景，适中字号，适配 600-1024px 屏幕
   static ThemeData get tabletTheme {
     return ThemeData(
       brightness: Brightness.light,
@@ -152,6 +163,7 @@ class CatThemes {
     );
   }
 
+  /// 手机端主题：紧凑浅色背景，小号字号，适配 &lt;600px 屏幕
   static ThemeData get phoneTheme {
     return ThemeData(
       brightness: Brightness.light,
