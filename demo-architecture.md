@@ -105,7 +105,7 @@ CAT_Flutter/
 │   │           │   ├── connectivity_provider.dart
 │   │           │   ├── live_vehicle_provider.dart
 │   │           │   └── selected_source_provider.dart
-│   │           ├── pages/             # 所有功能页面（16 个 Page）
+│   │           ├── pages/             # 所有功能页面（17 个 Page）
 │   │           │   ├── dashboard_page.dart
 │   │           │   ├── fleet_page.dart / fleet_list_page.dart / fleet_detail_page.dart
 │   │           │   ├── mission_page.dart / mission_list_page.dart / mission_detail_page.dart
@@ -114,9 +114,10 @@ CAT_Flutter/
 │   │           │   ├── patrol_page.dart
 │   │           │   ├── approval_list_page.dart / approval_detail_page.dart
 │   │           │   ├── map_page.dart / vehicle_fullscreen_map_page.dart
+│   │           │   ├── vehicle_status_page.dart
 │   │           │   └── notification_center_page.dart
 │   │           ├── shells/            # 三端 Shell 布局
-│   │           │   ├── vehicle_shell.dart   # 左侧导航栏 + 右侧内容 + 全屏告警弹窗
+│   │           │   ├── vehicle_shell.dart   # 左侧驾驶员专属导航栏（5 项）+ 全屏告警弹窗
 │   │           │   ├── tablet_shell.dart    # 自适应双栏/单栏布局
 │   │           │   └── phone_shell.dart     # BottomNavigationBar + IndexedStack
 │   │           └── widgets/           # 业务共用组件（20 个 Widget）
@@ -284,7 +285,11 @@ enum AppType { vehicle, tablet, phone }
 
 GoRouter createAppRouter(AppType appType) {
   return GoRouter(
-    initialLocation: '/dashboard',
+    // 车载端默认打开矿区地图，平板/手机默认打开运营概览
+    initialLocation: switch (appType) {
+      AppType.vehicle => '/map',
+      AppType.tablet || AppType.phone => '/dashboard',
+    },
     routes: [
       // 三端共享业务路由，根据 AppType 选择不同 Shell
       switch (appType) {
@@ -305,7 +310,7 @@ GoRouter createAppRouter(AppType appType) {
 
 | 终端 | Shell 类型 | 导航方式 | 特点 |
 |------|-----------|---------|------|
-| **车载** | `ShellRoute` → `VehicleShell` | 左侧固定侧边栏（9 项导航） | 始终横屏、全屏告警弹窗中断、硬件键盘快捷键 |
+| **车载** | `ShellRoute` → `VehicleShell` | 左侧固定侧边栏（5 项导航，驾驶员专属） | 始终横屏、全屏告警弹窗中断、硬件键盘快捷键 |
 | **平板** | `ShellRoute` → `TabletShell` | 左侧导航面板（10 项） | 自适应双栏/单栏、支持横竖屏切换 |
 | **手机** | `StatefulShellRoute.indexedStack` → `PhoneShell` | 底部导航栏（6 个标签） | 保持页面状态、竖屏窄屏优化 |
 
@@ -313,19 +318,20 @@ GoRouter createAppRouter(AppType appType) {
 
 | 路径 | 页面 | 车载 | 平板 | 手机 |
 |------|------|:---:|:---:|:---:|
-| `/dashboard` | 运营概览 | ✅ | ✅ | ✅ (Tab 1) |
-| `/fleet` | 车队管理 | ✅ | ✅ | — |
-| `/fleet/:id` | 车辆详情 | ✅ | ✅ | — |
-| `/missions` | 任务管理 | ✅ | ✅ | ✅ (Tab 2) |
+| `/dashboard` | 运营概览 | — | ✅ | ✅ (Tab 1) |
+| `/fleet` | 车队管理 | — | ✅ | — |
+| `/fleet/:id` | 车辆详情 | — | ✅ | — |
+| `/missions` | 任务管理 | ✅ (我的任务) | ✅ | ✅ (Tab 2) |
 | `/missions/:id` | 任务详情 | ✅ | ✅ | ✅ |
-| `/alerts` | 告警中心 | ✅ | ✅ | ✅ (Tab 3) |
+| `/alerts` | 告警中心 | ✅ (告警) | ✅ | ✅ (Tab 3) |
 | `/alerts/:id` | 告警详情 | ✅ | ✅ | ✅ |
-| `/map` | 矿区地图 | ✅ | ✅ | — |
+| `/map` | 矿区地图 | ✅ (默认首页) | ✅ | — |
+| `/vehicle-status` | 车辆状态（驾驶员专属） | ✅ | — | — |
 | `/vehicle/fullscreen-map` | 全屏地图（车载专属） | ✅ | — | — |
-| `/patrol` | 巡检打卡 | ✅ | ✅ | ✅ (Tab 4) |
-| `/approval` | 审批管理 | ✅ | ✅ | ✅ (Tab 5) |
-| `/approval/:id` | 审批详情 | ✅ | ✅ | ✅ |
-| `/notifications` | 通知中心 | ✅ | ✅ | ✅ (顶层) |
+| `/patrol` | 巡检打卡 | — | ✅ | ✅ (Tab 4) |
+| `/approval` | 审批管理 | — | ✅ | ✅ (Tab 5) |
+| `/approval/:id` | 审批详情 | — | ✅ | ✅ |
+| `/notifications` | 通知中心 | — | ✅ | ✅ (顶层) |
 | `/agent` | AI 助手 | ✅ | ✅ | ✅ (Tab 6) |
 
 ---
@@ -362,10 +368,16 @@ final fleetDevicesProvider = FutureProvider.autoDispose<List<Device>>(...);
 final vehicleDetailProvider = FutureProvider.autoDispose.family<Vehicle?, String>(...);
 
 // 3. 任务列表
-final missionListProvider = FutureProvider<List<Mission>>(...);
+final missionsProvider = FutureProvider.autoDispose<List<Mission>>(...);
+final missionsByStatusProvider = FutureProvider.autoDispose.family<List<Mission>, String>(...);
+final missionDetailProvider = FutureProvider.autoDispose.family<Mission?, String>(...);
+final activeMissionCountProvider = FutureProvider.autoDispose<int>(...);
 
 // 4. 告警列表
-final alertListProvider = FutureProvider<List<Alert>>(...);
+final alertsProvider = FutureProvider.autoDispose<List<Alert>>(...);
+final alertsByLevelProvider = FutureProvider.autoDispose.family<List<Alert>, String>(...);
+final todayAlertCountProvider = FutureProvider.autoDispose<int>(...);
+final unacknowledgedAlertCountProvider = FutureProvider.autoDispose<int>(...);
 
 // 5. Agent 对话
 final agentProvider = StateNotifierProvider<AgentNotifier, AgentState>(...);
@@ -373,13 +385,20 @@ final agentProvider = StateNotifierProvider<AgentNotifier, AgentState>(...);
 // 6. 网络连接状态
 final connectivityProvider = StreamProvider<bool>(...);
 
-// 7. WebSocket 实时车辆状态流
-final liveVehicleStreamProvider = StreamProvider<LiveEvent>(...);
+// 7. WebSocket 实时数据流
+final liveVehicleProvider = StreamProvider<LiveVehicleSnapshots>(...);
+final liveAlertProvider = StreamProvider<LiveEvent>(...);
+final liveAlertStreamProvider = StreamProvider.autoDispose<LiveEvent>(...);
 
-// 8. 地图选中实体
-final selectedEntityProvider = StateProvider<LiveEvent?>(...);
+// 8. 地图与巡检
+final mapProvider = StateNotifierProvider<MapNotifier, MapState>(...);
+final patrolProvider = FutureProvider.autoDispose<List<PatrolPoint>>(...);
 
-// 9. 巡检、审批、通知 Provider...
+// 9. 审批
+final approvalProvider = FutureProvider.autoDispose<List<ApprovalRequest>>(...);
+
+// 10. 通知
+final notificationProvider = FutureProvider.autoDispose<List<NotificationMessage>>(...);
 ```
 
 ---
@@ -561,13 +580,13 @@ class AdaptiveLayout extends StatelessWidget {
 | 序号 | 展示点 | 演示方式 |
 |------|--------|---------|
 | **1** | **模块化架构** | 展示 Melos Monorepo 目录结构，讲解 Clean Architecture 分层与单向依赖 |
-| **2** | **三端自适应** | 同一套代码在车载/平板/手机 Chrome 窗口展示不同布局和主题 |
+| **2** | **三端角色自适应** | 同一套代码在车载（驾驶员 5 项导航）/ 平板（调度员 10 项面板）/ 手机（管理者 6 个 Tab）展示不同功能和主题 |
 | **3** | **实时数据推送** | MockWebSocketService 模拟车辆状态实时刷新，地图上车辆标记平滑移动 |
 | **4** | **离线可用** | 断网后数据来自 Drift 本地缓存，操作入离线队列，联网后 SyncEngine 自动同步 |
 | **5** | **Agent 结构化交互** | 演示 4 种卡片类型的 Agent 对话：告警触发 → 建议操作 → 确认反馈 |
 | **6** | **地图 + Overlay** | flutter_map 上展示车辆标记（VehicleMarker）+ 告警气泡 + 路线线条 |
-| **7** | **全屏告警中断** | 车载端 critical 级别告警以全屏弹窗中断当前操作，支持键盘快捷键确认 |
-| **8** | **代码质量** | freezed 不可变模型 + Drift 类型安全数据库 + Riverpod 编译安全 Provider |
+| **7** | **车载驾驶员专属终端** | 车辆仪表盘实时数据（速度/油量/发动机温度）+ critical 全屏告警中断 + 键盘快捷键 |
+| **8** | **代码质量** | freezed 不可变模型 + Drift 类型安全数据库 + Riverpod 编译安全 Provider + 全量中文文档注释 |
 
 ---
 
@@ -601,10 +620,10 @@ dev_dependencies:
 
 ## 十二、面试讲述建议
 
-> **开场 (1 分钟)**：「这是一个面向无人矿山场景的跨平台终端 Demo，我使用 Flutter + Melos Monorepo 架构，在一套代码库里同时支持车载大屏、平板和手机，涵盖 9 个功能模块。接下来我分别展示架构分层、三端自适应、实时数据、离线能力和 Agent 交互。」
+> **开场 (1 分钟)**：「这是一个面向无人矿山场景的跨平台终端 Demo，我使用 Flutter + Melos Monorepo 架构，在一套代码库里同时支持车载大屏（驾驶员）、平板（调度员）和手机（管理者），每个终端按角色裁剪功能——车载端仅 5 项驾驶员核心功能，平板和手机各有完整的 9 个业务模块。接下来我分别展示架构分层、三端角色自适应、实时数据、离线能力和 Agent 交互。」
 
-> **架构讲解 (3 分钟)**：从下往上讲 — 平台层 → 数据层（Drift + Dio Mock） → 领域层（freezed 实体 + Repository 接口） → 应用层（Riverpod Provider + GoRouter 三端路由） → 表现层（三套 Shell + 共用组件），每层一句话说明职责，强调"依赖方向单向"和"模块复用"。
+> **架构讲解 (3 分钟)**：从下往上讲 — 平台层 → 数据层（Drift + Dio Mock） → 领域层（freezed 实体 + Repository 接口） → 应用层（Riverpod Provider + GoRouter 三端按角色路由） → 表现层（三套 Shell + 角色差异化导航 + 共用组件），每层一句话说明职责，强调"依赖方向单向"、"模块复用"和"同代码库多角色终端"。
 
 > **核心演示 (8 分钟)**：按上表清单顺序，每个点 1 分钟演示 + 1 句设计理由。
 
-> **收尾 (3 分钟)**：主动提可以深入讲的部分（如离线同步引擎的队列设计、车载端全屏告警中断逻辑、Riverpod 的 autoDispose 与 Provider 作用域隔离），把主动权交给面试官。
+> **收尾 (3 分钟)**：主动提可以深入讲的部分（如离线同步引擎的队列设计、车载端车辆仪表盘实时数据与全屏告警中断逻辑、按角色裁剪路由的设计决策、Riverpod 的 autoDispose 与 Provider 作用域隔离），把主动权交给面试官。

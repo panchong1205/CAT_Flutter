@@ -146,13 +146,13 @@ cd apps/cat_tablet && flutter run -d chrome
 | # | 操作 | 产出 |
 |---|------|------|
 | 3.1 | 在 `cat_core` 中搭建 GoRouter 路由表（所有路由定义） | 路由骨架 |
-| 3.2 | 创建 `VehicleShell`：全屏地图容器 + 左侧侧边栏 + 底部状态栏，始终横屏 | 车载 Shell |
+| 3.2 | 创建 `VehicleShell`：全屏地图容器 + 左侧驾驶员专属侧边栏（5 项核心功能）+ 底部状态栏，始终横屏 | 车载 Shell |
 | 3.3 | 创建 `TabletShell`：Master-Detail 双栏（横屏）/ 单栏 + BottomNav（竖屏） | 平板 Shell |
 | 3.4 | 创建 `PhoneShell`：单栏 + BottomNavigationBar | 手机 Shell |
-| 3.5 | 创建占位页面（Dashboard、Fleet、Mission、Alert、Map、Agent 各一个占位 Page） | 占位页面 |
-| 3.6 | 实现路由守卫（Redirect 逻辑按终端类型限制路由） | 路由守卫 |
+| 3.5 | 创建占位页面（Dashboard、Fleet、Mission、Alert、Map、Agent 各一个占位 Page，共 16 个占位页） | 占位页面 |
+| 3.6 | 实现路由守卫（Redirect 逻辑按终端类型限制路由 — 车载端仅 5 条业务路由） | 路由守卫 |
 | 3.7 | 在平板端添加分屏/窗口大小变化时的布局切换动画 | 自适应过渡动画 |
-| 3.8 | 在车载 Shell 添加物理按键模拟（键盘 Esc/Enter/F1-F4 映射） | 按键映射 |
+| 3.8 | 在车载 Shell 添加物理按键模拟（键盘 Esc/Enter/F1-F5 映射） | 按键映射 |
 
 **编译验证**：
 
@@ -351,7 +351,7 @@ cd apps/cat_tablet && flutter run -d chrome
 | 8.4 | 创建 `MissionCard`：任务摘要卡片 | 任务卡片 |
 | 8.5 | 实现任务状态流转逻辑（Provider + UseCase） | 状态流转 |
 | 8.6 | 实现任务操作的离线队列支持 | 离线操作 |
-| 8.7 | 在车载端实现「新任务弹窗 + TTS 播报」效果 | 车载任务通知 |
+| 8.7 | 在车载端实现「新任务弹窗 + TTS 播报」效果（驾驶员只看自己的任务） | 车载任务通知 |
 | 8.8 | 实现任务与车辆的关联展示 | 关联展示 |
 
 **编译验证**：
@@ -391,7 +391,7 @@ cd apps/cat_vehicle && flutter run -d chrome
 | 9.4 | 创建 `AlertSeverityIndicator`：严重程度指示器（Critical/Warning/Info） | 严重度组件 |
 | 9.5 | 实现告警确认逻辑（`AcknowledgeAlert` UseCase） | 确认逻辑 |
 | 9.6 | Mock 定时生成新告警（WebSocket 推送） | 告警模拟 |
-| 9.7 | 在车载端实现全屏告警弹窗（最高优先级中断） | 全屏告警 |
+| 9.7 | 在车载端实现全屏告警弹窗（最高优先级中断，驾驶员确认当前车辆告警） | 全屏告警 |
 
 **编译验证**：
 
@@ -514,9 +514,9 @@ cd apps/cat_vehicle && flutter run -d chrome
 | 12.2 | 创建 `ApprovalListPage`：审批列表 + 审批详情 | 审批模块 |
 | 12.3 | 实现审批操作按钮（通过/驳回/转交） | 审批操作 |
 | 12.4 | 创建 `NotificationCenter`：消息通知中心（汇总页面） | 通知中心 |
-| 12.5 | 串联完整 Demo 场景：下发任务 → 矿卡接受 → 异常告警 → Agent 建议 → 巡检确认 → 任务完成 | 场景串联 |
+| 12.5 | 串联完整 Demo 场景：下发任务 → 矿卡接受 → 异常告警 → Agent 建议 → 巡检确认 → 任务完成（各终端按角色视角参与） | 场景串联 |
 | 12.6 | 在手机端优化 Dashboard 运营概览看板 | 运营看板 |
-| 12.7 | 确保三端所有路由可正常导航 | 全路由验证 |
+| 12.7 | 确保三端所有路由可正常导航（车载端 5 条业务路由 / 平板端 10 条 / 手机端 6 个 Tab） | 全路由验证 |
 | 12.8 | 整体编译检查 + 静态分析 + 格式化 | 代码质量 |
 
 **编译验证**：
