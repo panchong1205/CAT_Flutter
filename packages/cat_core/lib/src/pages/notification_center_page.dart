@@ -17,45 +17,39 @@ class NotificationCenterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notificationsAsync = ref.watch(notificationsProvider);
-    final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-          child: Text(title, style: textTheme.headlineMedium),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => GoRouter.of(context).pop(),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 4, 24, 20),
-        ),
-        Expanded(
-          child: notificationsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, _) => Center(child: Text('加载失败: $err')),
-            data: (notifications) {
-              if (notifications.isEmpty) {
-                return const Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.notifications_none, size: 64, color: Colors.grey),
-                      SizedBox(height: 16),
-                      Text('暂无通知', style: TextStyle(color: Colors.grey, fontSize: 16)),
-                    ],
-                  ),
-                );
-              }
-              return ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                itemCount: notifications.length,
-                itemBuilder: (context, index) =>
-                    _NotificationTile(message: notifications[index]),
-              );
-            },
-          ),
-        ),
-      ],
+        title: Text(title),
+      ),
+      body: notificationsAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, _) => Center(child: Text('加载失败: $err')),
+        data: (notifications) {
+          if (notifications.isEmpty) {
+            return const Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.notifications_none, size: 64, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text('暂无通知', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                ],
+              ),
+            );
+          }
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            itemCount: notifications.length,
+            itemBuilder: (context, index) =>
+                _NotificationTile(message: notifications[index]),
+          );
+        },
+      ),
     );
   }
 }

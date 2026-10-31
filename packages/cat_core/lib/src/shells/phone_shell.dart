@@ -41,7 +41,7 @@ class PhoneShell extends ConsumerWidget {
           leading: const SizedBox(width: 56),
           title: const Center(child: Text('CUSTOM Phone')),
           actions: [
-            _NotificationBell(onTap: () => GoRouter.of(context).go('/notifications')),
+            _NotificationBell(onTap: () => GoRouter.of(context).push('/notifications')),
           ],
         ),
       ),
